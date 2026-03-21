@@ -1,39 +1,58 @@
+val mod_name = property("mod_name")
+val mod_id = property("mod_id")
+val mod_version = property("mod_version")
+val mod_description = property("mod_description")
+
+val minecraft_version = property("minecraft_version")
+val yarn_mappings_version = property("yarn_mappings_version")
+val fabric_loader_version = property("fabric_loader_version")
+val fabric_api_version = property("fabric_api_version")
+
+val yacl_version = property("yacl_version")
+val mod_menu_version = property("mod_menu_version")
+
 plugins {
 	id("net.fabricmc.fabric-loom-remap")
-	`maven-publish`
 }
 
-version = providers.gradleProperty("mod_version").get()
-group = providers.gradleProperty("maven_group").get()
-
 base {
-	archivesName = providers.gradleProperty("archives_base_name")
+	archivesName.set("$mod_name-$mod_version+$minecraft_version+-fabric")
 }
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
+	maven("https://maven.isxander.dev/releases")
+	maven("https://maven.terraformersmc.com/")
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")
-	mappings(loom.officialMojangMappings())
-	modImplementation("net.fabricmc:fabric-loader:${providers.gradleProperty("loader_version").get()}")
+	minecraft("com.mojang:minecraft:$minecraft_version")
+	mappings("net.fabricmc:yarn:$yarn_mappings_version:v2")
+	modImplementation("net.fabricmc:fabric-loader:$fabric_loader_version")
+	modImplementation("net.fabricmc.fabric-api:fabric-api:$fabric_api_version")
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
-	
+	modImplementation("dev.isxander:yet-another-config-lib:$yacl_version")
+	modImplementation("com.terraformersmc:modmenu:$mod_menu_version")
 }
 
 tasks.processResources {
-	inputs.property("version", version)
+	val props = mapOf(
+		"mod_id" to mod_id,
+		"mod_name" to mod_name,
+		"mod_version" to mod_version,
+		"mod_description" to mod_description,
+
+		"minecraft_version" to minecraft_version,
+		"fabric_loader_version" to fabric_loader_version,
+		"fabric_api_version" to fabric_api_version,
+
+		"yacl_version" to yacl_version,
+		"mod_menu_version" to mod_menu_version
+	)
+
+	inputs.properties(props)
 
 	filesMatching("fabric.mod.json") {
-		expand("version" to version)
+		expand(props)
 	}
 }
 
@@ -42,11 +61,7 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
 	withSourcesJar()
-
 	sourceCompatibility = JavaVersion.VERSION_21
 	targetCompatibility = JavaVersion.VERSION_21
 }
@@ -56,23 +71,5 @@ tasks.jar {
 
 	from("LICENSE") {
 		rename { "${it}_${base.archivesName.get()}" }
-	}
-}
-
-// configure the maven publication
-publishing {
-	publications {
-		register<MavenPublication>("mavenJava") {
-			artifactId = base.archivesName.get()
-			from(components["java"])
-		}
-	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
 	}
 }

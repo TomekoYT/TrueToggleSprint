@@ -1,31 +1,45 @@
 {
 	"schemaVersion": 1,
-	"id": "true-toggle-sprint",
-	"version": "${version}",
-	"name": "True Toggle Sprint",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"id": "${mod_id}",
+	"version": "${mod_version}",
+	"name": "${mod_name}",
+	"description": "${mod_description}",
 	"authors": [
-		"Me!"
+		"Tomeko"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/mod/truetogglesprint",
+		"sources": "https://github.com/TomekoYT/TrueToggleSprint",
+		"issues": "https://github.com/TomekoYT/TrueToggleSprint/issues"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/true-toggle-sprint/icon.png",
-	"environment": "*",
+	"icon": "assets/truetogglesprint/icon.png",
+	"environment": "client",
 	"entrypoints": {
-		"main": [
+		"client": [
 			"tomeko.truetogglesprint.TrueToggleSprint"
+		],
+		"modmenu": [
+			"tomeko.truetogglesprint.config.ModMenuIntegration"
 		]
 	},
-	"mixins": [
-		"true-toggle-sprint.mixins.json"
-	],
 	"depends": {
-		"fabricloader": ">=0.18.4",
-		"minecraft": "~1.21.10",
 		"java": ">=21",
-		"fabric-api": "*"
+		"minecraft": "~${minecraft_version}",
+		"fabricloader": ">=${fabric_loader_version}",
+		"fabric-api": ">=${fabric_api_version}",
+
+		"yet_another_config_lib_v3": ">=${yacl_version}",
+		"modmenu": ">=${mod_menu_version}"
+	},
+	"custom": {
+		"youtube": "https://www.youtube.com/@TomekoYT",
+		"modmenu": {
+			"links": {
+				"modmenu.discord": "https://discord.com/invite/FfzrbycDws",
+				"modmenu.modrinth": "https://modrinth.com/mod/truetogglesprint"
+			},
+			"update_checker": true
+		}
 	}
 }
