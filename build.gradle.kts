@@ -12,7 +12,7 @@ val yacl_version = property("yacl_version")
 val mod_menu_version = property("mod_menu_version")
 
 plugins {
-	id("net.fabricmc.fabric-loom-remap")
+	id("net.fabricmc.fabric-loom-remap") version "1.15-SNAPSHOT"
 }
 
 base {
@@ -22,6 +22,14 @@ base {
 repositories {
 	maven("https://maven.isxander.dev/releases")
 	maven("https://maven.terraformersmc.com/")
+}
+
+loom {
+	runConfigs.all {
+		ideConfigGenerated(stonecutter.current.isActive)
+		runDir = "../../run"
+	}
+	runConfigs.remove(runConfigs["server"])
 }
 
 dependencies {

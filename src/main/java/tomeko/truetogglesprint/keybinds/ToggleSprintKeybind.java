@@ -4,7 +4,11 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.KeyMapping;
+//? if >= 1.21.11 {
+//import net.minecraft.resources.Identifier;
+//?} else {
 import net.minecraft.resources.ResourceLocation;
+//?}
 import org.lwjgl.glfw.GLFW;
 import tomeko.truetogglesprint.config.TrueToggleSprintConfig;
 import tomeko.truetogglesprint.utils.Constants;
@@ -17,7 +21,11 @@ public class ToggleSprintKeybind {
                 "key.category.truetogglesprint.togglesprint",
                 InputConstants.Type.KEYSYM,
                 GLFW.GLFW_KEY_M,
+                //? if >= 1.21.11 {
+                //KeyMapping.Category.register(Identifier.parse(Constants.MOD_ID))
+                //?} else {
                 KeyMapping.Category.register(ResourceLocation.parse(Constants.MOD_ID))
+                //?}
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
