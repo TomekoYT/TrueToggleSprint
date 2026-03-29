@@ -5,7 +5,6 @@ val mod_description = property("mod_description")
 val mod_archive_name = property("mod_archive_name")
 
 val minecraft_version = property("minecraft_version")
-val yarn_mappings_version = property("yarn_mappings_version")
 val fabric_loader_version = property("fabric_loader_version")
 val fabric_api_version = property("fabric_api_version")
 
@@ -27,7 +26,7 @@ repositories {
 
 dependencies {
 	minecraft("com.mojang:minecraft:$minecraft_version")
-	mappings("net.fabricmc:yarn:$yarn_mappings_version:v2")
+	mappings(loom.officialMojangMappings())
 	modImplementation("net.fabricmc:fabric-loader:$fabric_loader_version")
 	modImplementation("net.fabricmc.fabric-api:fabric-api:$fabric_api_version")
 
