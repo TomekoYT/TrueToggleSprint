@@ -18,6 +18,7 @@ plugins {
 stonecutter {
     create(rootProject) {
         versions("1.21.10", "1.21.11")
+        version("26.1").buildscript("unobfuscated.gradle.kts")
         vcsVersion = providers.gradleProperty("stonecutter_minecraft_version")
     }
 }
