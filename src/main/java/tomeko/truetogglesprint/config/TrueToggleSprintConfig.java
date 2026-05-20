@@ -28,9 +28,11 @@ public class TrueToggleSprintConfig {
     @SerialEntry
     public static boolean toggleSprintTextShadowEnabled = false;
     @SerialEntry
-    public static float toggleSprintTextWidthPercentage = 10F;
+    public static float toggleSprintTextWidthPercentage = 10f;
     @SerialEntry
-    public static float toggleSprintTextHeightPercentage = 10F;
+    public static float toggleSprintTextHeightPercentage = 10f;
+    @SerialEntry
+    public static float toggleSprintScale = 100f;
 
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(CONFIG, ((defaults, config, builder) -> builder
@@ -59,16 +61,24 @@ public class TrueToggleSprintConfig {
                                 .binding(defaults.toggleSprintTextWidthPercentage, () -> config.toggleSprintTextWidthPercentage, newVal -> config.toggleSprintTextWidthPercentage = newVal)
                                 .controller(opt -> FloatSliderControllerBuilder.create(opt)
                                         .formatValue(value -> Component.literal(String.format("%,.0f", value) + "%"))
-                                        .range(0F, 100F)
-                                        .step(1F))
+                                        .range(0f, 100f)
+                                        .step(1f))
                                 .build())
                         .option(Option.<Float>createBuilder()
                                 .name(Component.literal("Position Y"))
                                 .binding(defaults.toggleSprintTextHeightPercentage, () -> config.toggleSprintTextHeightPercentage, newVal -> config.toggleSprintTextHeightPercentage = newVal)
                                 .controller(opt -> FloatSliderControllerBuilder.create(opt)
                                         .formatValue(value -> Component.literal(String.format("%,.0f", value) + "%"))
-                                        .range(0F, 100F)
-                                        .step(1F))
+                                        .range(0f, 100f)
+                                        .step(1f))
+                                .build())
+                        .option(Option.<Float>createBuilder()
+                                .name(Component.literal("Scale"))
+                                .binding(defaults.toggleSprintScale, () -> config.toggleSprintScale, newVal -> config.toggleSprintScale = newVal)
+                                .controller(opt -> FloatSliderControllerBuilder.create(opt)
+                                        .formatValue(value -> Component.literal(String.format("%,.0f", value) + "%"))
+                                        .range(50f, 200f)
+                                        .step(1f))
                                 .build())
                         .build())
 
