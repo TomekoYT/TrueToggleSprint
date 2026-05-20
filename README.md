@@ -17,4 +17,4 @@ Toggle Sprint mod with a keybind and a customizable HUD
 
 ### Toggle Sprint
 - Use a keybind to toggle sprint
-- Customize Text, Color, Text Shadow, Position
+- Customize Text, Color, Text Shadow, Position, Scale
